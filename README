@@ -1,0 +1,47 @@
+Usage:
+ cmd> opensh.pl [ -m Machine  | -l TextFile.txt | -i IP_Address(es) ]
+
+       -m Machine........A single machine to scan for open
+                         shares.
+       -l TextFile.txt...A path to a text file containing a
+                         a list of machines.  This list
+                         must contain a machine on each line.
+                         If a machine is prepended by a \\,
+                         that's ok...it will be substituted.
+                         Ideally this would be a text file
+                         that matches the format of the
+                         'net view' command.
+       -i IP_Address.....An IP address or range of IPs to
+                         scan. To specify a range enter it
+                         in this format: 192.168.1.2-254.
+                         This would scan 192.168.1.2 to
+                         192.168.1.254.
+
+ The script will create a text file for each machine
+ scanned containing log details for open shares and
+ interesting files matched against.
+
+ Examples:
+
+  cmd> opensh.pl -m GOP21452
+
+      *Scan for all open shares on machine GOP21542
+
+  cmd> opensh.pl -l Machines.txt
+
+      *Scan for all open shares for machines specified
+       in the Machines.txt file.
+
+  cmd> opensh.pl -i 192.168.1.2-254
+  
+      *Scan all machines assigned IP addresses 
+       192.168.1.2 thru 192.168.1.254
+
+Perl modules used:
+Win32::Perms;
+Win32::NetAdmin;
+Win32::NetResource qw(:DEFAULT GetSharedResources GetError);
+Win32::AdminMisc;
+Getopt::Std;
+File::Find;
+Net::Ping;
